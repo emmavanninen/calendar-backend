@@ -1,6 +1,7 @@
 var path = require('path');
 var logger = require('morgan');
 var express = require('express');
+const cors = require("cors");
 var createError = require('http-errors');
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -16,6 +17,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
