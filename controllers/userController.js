@@ -7,6 +7,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       User.findOne({ email: params.email }).then(user => {
         if (user) {
+          //TODO: give proper error
           console.log("user already exists");
         } else {
           const newUser = new User(params);
@@ -17,8 +18,6 @@ module.exports = {
                 reject(err);
               } else {
                 newUser.password = hash;
-                console.log(newUser);
-
                 newUser
                   .save()
                   .then(user => {
@@ -34,8 +33,6 @@ module.exports = {
                         if (err) {
                           reject(err);
                         } else {
-                          console.log("poop3");
-
                           let success = {};
                           success.confirmation = true;
                           success.token = `Bearer ${token}`;
@@ -51,5 +48,54 @@ module.exports = {
         }
       });
     }).catch(error => reject(error));
+  },
+
+  userLogin: params => {
+    console.log(`params`, params);
+
+    return new Promise((resolve, reject) => {
+      User.findOne({ email: params.email })
+        .then(user => {
+          if (user) {
+             bcrypt
+               .compare(params.password, user.password)
+               .then(isMatch => {
+                 if (isMatch) {
+                   const payload = {
+                     id: user.id,
+                     email: user.email
+                   };
+                   jwt.sign(
+                     payload,
+                     process.env.SECRET_KEY,
+                     { expiresIn: 3600 },
+                     (err, token) => {
+                       if (err) {
+                         reject(err);
+                       } else {
+                         let success = {};
+                         success.confirmation = true;
+                         success.token = `Bearer ${token}`;
+                         resolve(success);
+                       }
+                     }
+                   );
+                 } else {
+                   let errors = {};
+                   errors.message = "Incorrect email or password";
+                   errors.status = 400;
+                   reject(errors);
+                 }
+               })
+               .catch(error => {
+                 reject(error);
+               });
+          } else {
+            //TODO: give proper error
+            console.log("no such user");
+          }
+        })
+        .catch(error => reject(error));
+    });
   }
 };
