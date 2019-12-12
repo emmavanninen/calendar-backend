@@ -31,4 +31,15 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.post("/logout", (req, res) => {
+  userController
+    .userLogout(req.body)
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => {
+      res.status(err.status).json(err);
+    });
+});
+
 module.exports = router;

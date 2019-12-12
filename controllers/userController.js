@@ -30,13 +30,17 @@ module.exports = {
                       process.env.SECRET_KEY,
                       { expiresIn: 3600 },
                       (err, token) => {
+                        //    console.log("token1", token);
                         if (err) {
                           reject(err);
                         } else {
                           let success = {};
                           success.confirmation = true;
                           success.token = `Bearer ${token}`;
-                          resolve(success);
+                          user.token.push({token: token})
+                          user.save()
+                          .then(resolve(user))
+                        //   resolve(success);
                         }
                       }
                     );
@@ -97,5 +101,22 @@ module.exports = {
         })
         .catch(error => reject(error));
     });
+  },
+
+  userLogout: params => {
+      console.log(`params`, params);
+
+    return new Promise((resolve, reject) => {
+        User.findOne({ email: params.email })
+          .then(user => {
+            if(user) {
+
+            } else {
+
+            }
+
+          })
+          .catch(error => reject(error));
+    })
   }
 };
