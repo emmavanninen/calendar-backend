@@ -2,7 +2,6 @@ const Event = require("../routes/models/Event");
 
 module.exports = {
   createEvent: params => {
-    console.log(`params`, typeof params.date);
 
     let str = params.date.slice(0, 7);
     str = str.replace(/-/g, "");
@@ -14,7 +13,6 @@ module.exports = {
       newEvent.event.date = params.date;
       newEvent.yearmonth = Number(str)
 
-        console.log(`newevent`, newEvent);
         
       newEvent
         .save()
@@ -25,11 +23,9 @@ module.exports = {
     });
   },
 
-  getAllMonthlyEvents: month => {
-    console.log(`month`, month);
-
+  getAllMonthlyEvents: params => {
     return new Promise((resolve, reject) => {
-      Event.findOne({ month: month })
+        Event.find({ yearmonth: params.yearmonth })
         .then(events => resolve(events))
         .catch(err => reject(err));
     });

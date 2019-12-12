@@ -16,9 +16,8 @@ router.get("/", (req, res) => {
 });
 
 
+
 router.post("/createevent", (req, res) => {
-    console.log(`body`, req.body);
-    
   eventController
     .createEvent(req.body)
     .then(event => {
