@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const userController = require("../controllers/userController");
+const auth = require("../middleware/auth");
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
@@ -31,7 +32,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post("/logout", (req, res) => {
+router.post("/logout", auth, (req, res) => {
   userController
     .userLogout(req.body)
     .then(result => {
