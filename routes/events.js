@@ -32,7 +32,7 @@ router.post("/createevent", (req, res) => {
 router.put("/editevent", (req, res) => {
   eventController
     .editEvent(req.body)
-    .then(event => {
+    .then(event => { 
       res.send(event);
     })
     .catch(err => {
