@@ -35,13 +35,19 @@ module.exports = {
     return new Promise((resolve, reject) => {
       Event.findById(params.id)
         .then(event => {
-          event.event.title = params.title;
-          event.event.description = params.desc;
+          if (!params.title) {
+            event.event.description = params.desc;
+          } else if (!params.desc) {
+            event.event.title = params.title;
+          } else {
+            event.event.title = params.title;
+            event.event.description = params.desc;
+          }
 
           event
             .save()
             .then(result => {
-              resolve(result)
+              resolve(result);
             })
             .catch(err => reject(err));
 
