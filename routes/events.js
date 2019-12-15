@@ -8,6 +8,8 @@ router.get("/", (req, res) => {
   eventController
     .getAllMonthlyEvents(req.query)
     .then(events => {
+        console.log(events);
+        
       res.send(events);
     })
     .catch(err => {

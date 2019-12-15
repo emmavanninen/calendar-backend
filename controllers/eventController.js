@@ -2,16 +2,22 @@ const Event = require("../routes/models/Event");
 
 module.exports = {
   createEvent: params => {
-    let str = params.date.slice(0, 7);
+      
+    let str = params.dateSet.toString().slice(0, 7);
     str = str.replace(/-/g, "");
+
+    console.log(`str`, str);
+    
 
     return new Promise((resolve, reject) => {
       const newEvent = new Event();
       newEvent.event.title = params.title;
       newEvent.event.description = params.desc;
-      newEvent.event.date = params.date;
+      newEvent.event.dateSet = params.dateSet;
+      newEvent.dateCreated = new Date();
       newEvent.yearmonth = Number(str);
-
+        console.log(`!!`, newEvent);
+        
       newEvent
         .save()
         .then(event => {

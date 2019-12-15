@@ -4,8 +4,9 @@ let EventSchema = new mongoose.Schema({
   event: {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    date: { type: Date, required: true }
+    dateSet: { type: Date, required: true }
   },
+    dateCreated: { type: Date, required: true },
   yearmonth: { type: Number, required: true },
 //   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 });
