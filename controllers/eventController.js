@@ -30,8 +30,6 @@ module.exports = {
   },
 
   editEvent: params => {
-    console.log(`params`, params);
-
     return new Promise((resolve, reject) => {
       Event.findById(params.id)
         .then(event => {

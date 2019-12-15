@@ -30,8 +30,6 @@ router.post("/createevent", (req, res) => {
 
 
 router.put("/editevent", (req, res) => {
-    console.log(`req.body`, req.body);
-    
   eventController
     .editEvent(req.body)
     .then(event => { 
