@@ -4,7 +4,7 @@ const router = express.Router();
 const eventController = require("../controllers/eventController");
 
 router.get("/", (req, res) => {
-    //! GET request doesn't have req.body
+  //! GET request doesn't have req.body
   eventController
     .getAllMonthlyEvents(req.query)
     .then(events => {
@@ -15,7 +15,17 @@ router.get("/", (req, res) => {
     });
 });
 
-
+router.delete("/delete:id", (req, res) => {
+  console.log(`id params`, req.params);
+  eventController
+    .deleteEvent(req.params)
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => {
+      res.status(err.status).json(err);
+    });
+});
 
 router.post("/createevent", (req, res) => {
   eventController
@@ -28,11 +38,10 @@ router.post("/createevent", (req, res) => {
     });
 });
 
-
 router.put("/editevent", (req, res) => {
   eventController
     .editEvent(req.body)
-    .then(event => { 
+    .then(event => {
       res.send(event);
     })
     .catch(err => {

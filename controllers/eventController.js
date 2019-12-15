@@ -29,6 +29,16 @@ module.exports = {
     });
   },
 
+  deleteEvent: params => {
+      return new Promise((resolve, reject) => {
+      Event.findByIdAndDelete(params.id)
+        .then(result => {
+            resolve(result)
+        })
+        .catch(err => reject(err));
+    });
+  },
+
   editEvent: params => {
     return new Promise((resolve, reject) => {
       Event.findById(params.id)
