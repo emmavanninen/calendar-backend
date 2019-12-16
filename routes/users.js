@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const passport = require("passport");
 const userController = require("../controllers/userController");
 const auth = require("../middleware/auth");
 
@@ -32,15 +33,19 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post("/logout", auth, (req, res) => {
-  userController
-    .userLogout(req.body)
-    .then(result => {
-      console.log(result);
-    })
-    .catch(err => {
-      res.status(err.status).json(err);
-    });
-});
+router.post(
+  "/logout",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    userController
+      .userLogout(req.body)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        res.status(err.status).json(err);
+      });
+  }
+);
 
 module.exports = router;

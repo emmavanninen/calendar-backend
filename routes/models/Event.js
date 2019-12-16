@@ -3,7 +3,7 @@ let mongoose = require("mongoose");
 let EventSchema = new mongoose.Schema({
   event: {
     title: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String },
     dateSet: { type: Date, required: true }
   },
     dateCreated: { type: Date, required: true },

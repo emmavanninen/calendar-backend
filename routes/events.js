@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-// const passport = require("passport");
+const passport = require("passport");
 const eventController = require("../controllers/eventController");
 
 router.get("/", (req, res) => {
@@ -8,7 +8,6 @@ router.get("/", (req, res) => {
   eventController
     .getAllMonthlyEvents(req.query)
     .then(events => {
-        console.log(events);
         
       res.send(events);
     })
@@ -17,19 +16,19 @@ router.get("/", (req, res) => {
     });
 });
 
-router.delete("/delete:id", (req, res) => {
+router.delete("/delete:id", passport.authenticate("jwt", { session: false }), (req, res) => {
   console.log(`id params`, req.params);
   eventController
     .deleteEvent(req.params)
     .then(result => {
-      console.log(result);
     })
     .catch(err => {
       res.status(err.status).json(err);
     });
 });
 
-router.post("/createevent", (req, res) => {
+router.post("/createevent", passport.authenticate("jwt", { session: false }), (req, res) => {
+    
   eventController
     .createEvent(req.body)
     .then(event => {
@@ -40,7 +39,7 @@ router.post("/createevent", (req, res) => {
     });
 });
 
-router.put("/editevent", (req, res) => {
+router.put("/editevent", passport.authenticate("jwt", { session: false }), (req, res) => {
   eventController
     .editEvent(req.body)
     .then(event => {

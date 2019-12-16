@@ -23,7 +23,8 @@ module.exports = {
                   .then(user => {
                     const payload = {
                       id: user._id,
-                      email: user.email
+                      email: user.email,
+                      name: user.name
                     };
                     jwt.sign(
                       payload,
@@ -37,9 +38,15 @@ module.exports = {
                           let success = {};
                           success.confirmation = true;
                           success.token = `Bearer ${token}`;
-                          user.token.push({token: token})
+                          user.token.push({token: success})
                           user.save()
-                          .then(resolve(user))
+                          .then(result =>
+                            {
+                                console.log(`result user?`, result);
+                                console.log(`result success`, success);
+                                
+                                resolve(user)
+                            })
                         //   resolve(success);
                         }
                       }
@@ -55,8 +62,6 @@ module.exports = {
   },
 
   userLogin: params => {
-    console.log(`params`, params);
-
     return new Promise((resolve, reject) => {
       User.findOne({ email: params.email })
         .then(user => {
@@ -67,7 +72,8 @@ module.exports = {
                  if (isMatch) {
                    const payload = {
                      id: user.id,
-                     email: user.email
+                     email: user.email,
+                     name: user.name
                    };
                    jwt.sign(
                      payload,

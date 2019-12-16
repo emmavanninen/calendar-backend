@@ -2,6 +2,7 @@ var path = require('path');
 var logger = require('morgan');
 var express = require('express');
 const cors = require("cors");
+var passport = require('passport');
 var createError = require('http-errors');
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -38,6 +39,9 @@ mongoose
     })
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(`MongoDB Error: ${err}`));
+
+app.use(passport.initialize());
+require("./routes/passport/passport")(passport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,11 +3,7 @@ const Event = require("../routes/models/Event");
 module.exports = {
   createEvent: params => {
       
-    let str = params.dateSet.toString().slice(0, 7);
-    str = str.replace(/-/g, "");
-
-    console.log(`str`, str);
-    
+    let str = params.year.toString() + params.month.toString();
 
     return new Promise((resolve, reject) => {
       const newEvent = new Event();
@@ -16,8 +12,9 @@ module.exports = {
       newEvent.event.dateSet = params.dateSet;
       newEvent.dateCreated = new Date();
       newEvent.yearmonth = Number(str);
-        console.log(`!!`, newEvent);
-        
+
+      console.log(`newevent`, newEvent.dateSet);
+      
       newEvent
         .save()
         .then(event => {
@@ -36,10 +33,10 @@ module.exports = {
   },
 
   deleteEvent: params => {
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       Event.findByIdAndDelete(params.id)
         .then(result => {
-            resolve(result)
+          resolve(result);
         })
         .catch(err => reject(err));
     });
@@ -64,8 +61,6 @@ module.exports = {
               resolve(result);
             })
             .catch(err => reject(err));
-
-          // resolve(result)
         })
         .catch(err => reject(err));
     });
