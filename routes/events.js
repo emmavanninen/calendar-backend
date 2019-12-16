@@ -16,6 +16,19 @@ router.get("/", (req, res) => {
     });
 });
 
+router.post("/createevent", passport.authenticate("jwt", { session: false }), (req, res) => {
+    console.log(`reqbody`, req.body);
+    
+  eventController
+    .createEvent(req.body)
+    .then(event => {
+      res.send(event);
+    })
+    .catch(err => {
+      res.status(err.status).json(err);
+    });
+});
+
 router.delete("/delete:id", passport.authenticate("jwt", { session: false }), (req, res) => {
   console.log(`id params`, req.params);
   eventController
@@ -27,18 +40,6 @@ router.delete("/delete:id", passport.authenticate("jwt", { session: false }), (r
     });
 });
 
-router.post("/createevent", passport.authenticate("jwt", { session: false }), (req, res) => {
-    console.log('poop');
-    
-  eventController
-    .createEvent(req.body)
-    .then(event => {
-      res.send(event);
-    })
-    .catch(err => {
-      res.status(err.status).json(err);
-    });
-});
 
 router.put("/editevent", passport.authenticate("jwt", { session: false }), (req, res) => {
   eventController

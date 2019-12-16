@@ -1,24 +1,34 @@
 const Event = require("../routes/models/Event");
+const User = require("../routes/models/User");
 
 module.exports = {
   createEvent: params => {
-      
-    let str = params.year.toString() + params.month.toString();
-
     return new Promise((resolve, reject) => {
-      const newEvent = new Event();
-      newEvent.event.title = params.title;
-      newEvent.event.description = params.desc;
-      newEvent.event.dateSet = params.dateSet;
-      newEvent.dateCreated = new Date();
-      newEvent.yearmonth = Number(str);
+      let str = params.year.toString() + params.month.toString();
 
-      console.log(`newevent`, newEvent.dateSet);
-      
-      newEvent
-        .save()
-        .then(event => {
-          resolve(event);
+      console.log(`params`, params);
+      User.findOne({ email: params.user })
+        .then(user => {
+          if (user) {
+            console.log(`user`, user);
+
+            const newEvent = new Event();
+            newEvent.event.title = params.title;
+            newEvent.event.description = params.desc;
+            newEvent.event.dateSet = params.dateSet;
+            newEvent.dateCreated = new Date();
+            newEvent.createdByUser = user;
+            newEvent.yearmonth = Number(str);
+
+            console.log(`newEvent`, newEvent);
+
+            newEvent
+              .save()
+              .then(event => {
+                resolve(event);
+              })
+              .catch(err => reject(err));
+          } else reject(err);
         })
         .catch(err => reject(err));
     });

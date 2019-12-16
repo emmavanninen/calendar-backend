@@ -6,9 +6,9 @@ let EventSchema = new mongoose.Schema({
     description: { type: String },
     dateSet: { type: Date, required: true }
   },
-    dateCreated: { type: Date, required: true },
-  yearmonth: { type: Number, required: true },
-//   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+  dateCreated: { type: Date, required: true },
+  createdByUser: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  yearmonth: { type: Number, required: true }
 });
 
 module.exports = mongoose.model("Event", EventSchema);
