@@ -28,6 +28,7 @@ router.delete("/delete:id", passport.authenticate("jwt", { session: false }), (r
 });
 
 router.post("/createevent", passport.authenticate("jwt", { session: false }), (req, res) => {
+    console.log('poop');
     
   eventController
     .createEvent(req.body)

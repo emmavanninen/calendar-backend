@@ -25,7 +25,6 @@ router.post("/login", (req, res) => {
   userController
     .userLogin(req.body)
     .then(user => {
-      console.log(`we here?`, user);
       res.send(user);
     })
     .catch(err => {
@@ -33,19 +32,18 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post(
-  "/logout",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    userController
-      .userLogout(req.body)
-      .then(result => {
-        console.log(result);
-      })
-      .catch(err => {
-        res.status(err.status).json(err);
-      });
-  }
-);
+router.post("/logout", (req, res) => {
+  console.log(req.body);
+
+  userController
+    .userLogout(req.body)
+    .then(result => {
+      console.log(result);
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(err.status).json(err);
+    });
+});
 
 module.exports = router;
