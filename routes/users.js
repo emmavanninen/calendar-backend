@@ -13,7 +13,6 @@ router.post("/register", (req, res) => {
   userController
     .registerNewUser(req.body)
     .then(user => {
-      console.log(`stuff got to the database`, user);
       res.send(user);
     })
     .catch(err => {
@@ -33,12 +32,10 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  console.log(req.body);
 
   userController
     .userLogout(req.body)
     .then(result => {
-      console.log(result);
       res.send(result)
     })
     .catch(err => {

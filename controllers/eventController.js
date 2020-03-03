@@ -6,21 +6,19 @@ module.exports = {
     return new Promise((resolve, reject) => {
       let str = params.year.toString() + params.month.toString();
 
-      console.log(`params`, params);
       User.findOne({ email: params.user })
         .then(user => {
           if (user) {
-            console.log(`user`, user);
 
             const newEvent = new Event();
             newEvent.event.title = params.title;
             newEvent.event.description = params.desc;
             newEvent.event.dateSet = params.dateSet;
             newEvent.dateCreated = new Date();
-            newEvent.createdByUser = user;
+            // TODO: fix to User later
+            newEvent.createdByUser = user.name;
             newEvent.yearmonth = Number(str);
 
-            console.log(`newEvent`, newEvent);
 
             newEvent
               .save()
@@ -36,6 +34,7 @@ module.exports = {
 
   getAllMonthlyEvents: params => {
     return new Promise((resolve, reject) => {
+        // TODO: fix add User.find later
       Event.find({ yearmonth: params.yearmonth })
         .then(events => resolve(events))
         .catch(err => reject(err));

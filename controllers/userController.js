@@ -106,12 +106,9 @@ module.exports = {
   },
 
   userLogout: params => {
-    console.log(`params`, params);
-
     return new Promise((resolve, reject) => {
       User.findOne({ email: params.email })
         .then(user => {
-          console.log(`found user`, user.token);
           //   TODO: how to use destroy
           //   jwtr.destroy(token);
           user.token = [];

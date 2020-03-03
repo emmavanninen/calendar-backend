@@ -17,7 +17,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/createevent", passport.authenticate("jwt", { session: false }), (req, res) => {
-    console.log(`reqbody`, req.body);
     
   eventController
     .createEvent(req.body)
@@ -30,7 +29,6 @@ router.post("/createevent", passport.authenticate("jwt", { session: false }), (r
 });
 
 router.delete("/delete:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-  console.log(`id params`, req.params);
   eventController
     .deleteEvent(req.params)
     .then(result => {

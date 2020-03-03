@@ -7,7 +7,8 @@ let EventSchema = new mongoose.Schema({
     dateSet: { type: Date, required: true }
   },
   dateCreated: { type: Date, required: true },
-  createdByUser: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  //TODO: fix to User later
+  createdByUser: { type: String, required: true },
   yearmonth: { type: Number, required: true }
 });
 
