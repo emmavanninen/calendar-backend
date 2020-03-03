@@ -16,7 +16,7 @@ router.post("/register", (req, res) => {
       res.send(user);
     })
     .catch(err => {
-      res.status(err.status).json(err);
+      res.status(400).json(err);
     });
 });
 
@@ -27,7 +27,7 @@ router.post("/login", (req, res) => {
       res.send(user);
     })
     .catch(err => {
-      res.status(err.status).json(err);
+      res.status(400).json(err);
     });
 });
 
@@ -39,7 +39,7 @@ router.post("/logout", (req, res) => {
       res.send(result)
     })
     .catch(err => {
-      res.status(err.status).json(err);
+      res.status(400).json(err);
     });
 });
 
