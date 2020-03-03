@@ -27,7 +27,6 @@ router.post('/login', (req, res) => {
       res.send(user)
     })
     .catch(err => {
-      console.log(err)
       res.status(400).json(err)
     })
 })
